@@ -4,12 +4,14 @@ namespace App\Entity;
 
 use App\Repository\JobRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=JobRepository::class)
  */
 class Job
 {
+    use TimestampableEntity;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
