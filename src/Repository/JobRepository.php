@@ -22,19 +22,20 @@ class JobRepository extends ServiceEntityRepository
     // /**
     //  * @return Job[] Returns an array of Job objects
     //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('j')
-            ->andWhere('j.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('j.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+
+        public function findNoneExpiredJobs()
+        {
+            return $this->createQueryBuilder('j')
+                ->innerJoin('j.category', 'cat')
+                ->addSelect('cat')
+                ->andWhere('j.expiresAt > :today')
+                ->setParameter('today', new \DateTime())
+                ->orderBy('j.createdAt', 'DESC')
+                ->getQuery()
+                ->getResult()
+            ;
+        }
+
 
     /*
     public function findOneBySomeField($value): ?Job

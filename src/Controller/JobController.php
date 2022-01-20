@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class JobController extends AbstractController
 {
     /**
-     * @Route("/", name="job_list")
+     * @Route("/", name="job_list", methods={"GET"})
      */
     public function index(JobRepository $jobRepository): Response
     {
@@ -22,7 +22,7 @@ class JobController extends AbstractController
     }
 
     /**
-     * @Route("/job/{id}", name="job_show")
+     * @Route("/job/{id}", name="job_show", methods={"GET"}, requirements={"id" : "\d+"})
      */
     public function show(Job $job): Response
     {

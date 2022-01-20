@@ -8,6 +8,7 @@
             <th class="active text-center">City</th>
             <th class="active text-center">Position</th>
             <th class="active text-center">Company</th>
+            <th class="active text-center">Category</th>
             <th class="active text-center">Actions</th>
         </tr>
 
@@ -20,6 +21,7 @@
                     </a>
                 </td>
                 <td>{{ job.company }}</td>
+                <td>{{ job.category.name }}</td>
                 <td><a href="{{ path('job_show', {id : job.id }) }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></td>
             </tr>
         {% endfor %}
