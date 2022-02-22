@@ -1,29 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Job list{% endblock %}
+{% block title %}
+    Jobs in the {{ category.name }} category
+{% endblock %}
 
 {% block body %}
+    <h4>{{ category.name }}</h4>
+
     <table class="table text-center">
+        <thead>
         <tr>
             <th class="active text-center">City</th>
             <th class="active text-center">Position</th>
             <th class="active text-center">Company</th>
-            <th class="active text-center">Category</th>
-            <th class="active text-center">Actions</th>
         </tr>
+        </thead>
 
-        {% for job in jobs %}
+        <tbody>
+        {% for job in category.activeJobs %}
             <tr>
                 <td>{{ job.location }}</td>
                 <td>
-                    <a href="#">
+                    <a href="{{ path('job_show', {id: job.id}) }}">
                         {{ job.position }}
                     </a>
                 </td>
                 <td>{{ job.company }}</td>
-                <td><a href="{{ path('app_show_category', {'slug' : job.category.slug}) }}">{{ job.category.name }}</a></td>
-                <td><a href="{{ path('job_show', {id : job.id }) }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></td>
             </tr>
         {% endfor %}
+        </tbody>
     </table>
 {% endblock %}

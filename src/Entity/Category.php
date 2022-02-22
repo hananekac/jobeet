@@ -6,6 +6,7 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
@@ -25,6 +26,11 @@ class Category
      * @ORM\Column(type="string", length=255)
      */
     private $name;
+    /**
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(type="string")
+     */
+    private $slug;
 
     /**
      * @ORM\OneToMany(targetEntity=Job::class, mappedBy="category")
@@ -114,5 +120,19 @@ class Category
         }
 
         return $this;
+    }
+
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function getActiveJobs():Collection
+    {
+        $activeJobs = $this->getJobs()->filter(function(Job $job){
+            return $job->getExpiresAt() > (new \DateTime());
+        });
+        return $activeJobs;
     }
 }
