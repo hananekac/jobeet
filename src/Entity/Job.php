@@ -12,6 +12,13 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 class Job
 {
     use TimestampableEntity;
+
+    const JOB_TYPE = [
+        'full-time',
+        'part-time',
+        'freelance'
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

@@ -10,10 +10,7 @@ use Faker\Factory;
 
 class JobFixtures extends Fixture implements DependentFixtureInterface
 {
-    const JOB_TYPE = [
-      'full-time',
-      'part-time'
-    ];
+
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create();
@@ -24,7 +21,7 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
                 CategoryFixtures::CATEGORY_DESIGN,
                 CategoryFixtures::CATEGORY_MANAGER,
             ])));
-            $job->setType($faker->randomElement(self::JOB_TYPE));
+            $job->setType($faker->randomElement(Job::JOB_TYPE));
             $job->setCompany($faker->company);
             $job->setLogo($faker->imageUrl());
             $job->setUrl($faker->url);

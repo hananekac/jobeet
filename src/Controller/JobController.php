@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Job;
+use App\Form\JobFormType;
 use App\Repository\JobRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -29,5 +32,21 @@ class JobController extends AbstractController
         return $this->render('job/show.html.twig', [
             'job' => $job,
         ]);
+    }
+
+    /**
+     * @Route("/job/new", name="job_new", methods={"GET","POST"})
+     */
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $job = new Job();
+        $form = $this->createForm(JobFormType::class, $job);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $entityManager->persist($job);
+            $entityManager->flush();
+            $this->redirectToRoute('job_list');
+        }
+        return $this->renderForm('job/new.html.twig',[ 'form' => $form]);
     }
 }
